@@ -40,6 +40,15 @@ data class Matrix(val data: Array<Array<Int>>) {
         return Matrix(data)
     }
 
+    operator fun times(other: Int): Matrix {
+        val data = Array<Array<Int>>(this.shape.first) { row ->
+            Array<Int>(this.shape.second) { col ->
+                this._data[row][col] * other
+            }
+        }
+        return Matrix(data)
+    }
+
     companion object {
         fun read(): Matrix {
             val (rows,columns) = readLine()!!.split(" ").map { it.toInt() }
@@ -57,8 +66,8 @@ data class Matrix(val data: Array<Array<Int>>) {
 fun main() {
     try {
         val a = Matrix.read()
-        val b = Matrix.read()
-        println(a + b)
+        val constant = readLine()!!.toInt()
+        println(a * constant)
     } catch (ex: Exception) {
         println("ERROR")
     }
