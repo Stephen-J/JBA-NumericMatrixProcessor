@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Numeric_Matrix_Processor.iml" filepath="$PROJECT_DIR$/.idea/modules/Numeric_Matrix_Processor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Problems/The lucky ticket/Numeric_Matrix_Processor.Problems-The_lucky_ticket.iml" filepath="$PROJECT_DIR$/.idea/modules/Problems/The lucky ticket/Numeric_Matrix_Processor.Problems-The_lucky_ticket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Problems/The lucky ticket/Numeric_Matrix_Processor.Problems-The_lucky_ticket.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Problems/The lucky ticket/Numeric_Matrix_Processor.Problems-The_lucky_ticket.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Problems/The lucky ticket/Numeric_Matrix_Processor.Problems-The_lucky_ticket.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Problems/The lucky ticket/Numeric_Matrix_Processor.Problems-The_lucky_ticket.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/Numeric_Matrix_Processor.util.iml" filepath="$PROJECT_DIR$/.idea/modules/util/Numeric_Matrix_Processor.util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/Numeric_Matrix_Processor.util.main.iml" filepath="$PROJECT_DIR$/.idea/modules/util/Numeric_Matrix_Processor.util.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/Numeric_Matrix_Processor.util.test.iml" filepath="$PROJECT_DIR$/.idea/modules/util/Numeric_Matrix_Processor.util.test.iml" />
+    </modules>
+  </component>
+</project>
