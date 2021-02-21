@@ -26,6 +26,39 @@ data class Matrix(val data: Array<Array<Double>>) {
         return data.contentHashCode()
     }
 
+
+    fun transposeMainDiagonal(): Matrix {
+        val transposedData = Array<Array<Double>>(shape.second) { row ->
+            Array<Double>(shape.first) { col ->
+                _data[col][row]
+            }}
+        return Matrix(transposedData)
+    }
+
+    fun transposeSideDiagonal(): Matrix {
+        val transposedData = Array<Array<Double>>(shape.second) { row ->
+            Array<Double>(shape.first) { col ->
+                _data[shape.second - col - 1][shape.first - row - 1]
+            }}
+        return Matrix(transposedData)
+    }
+
+    fun transposeVertical(): Matrix {
+        val transposedData = Array<Array<Double>>(shape.second) { row ->
+            Array<Double>(shape.first) { col ->
+                _data[row][shape.second - col - 1]
+            }}
+        return Matrix(transposedData)
+    }
+
+    fun transposeHorizontal(): Matrix {
+        val transposedData = Array<Array<Double>>(shape.second) { row ->
+            Array<Double>(shape.first) { col ->
+                _data[shape.first - row - 1][col]
+            }}
+        return Matrix(transposedData)
+    }
+
     override fun toString(): String {
         val formatAsDouble = data.any { it.any { !it.toString().endsWith(".0") } }
         return if (formatAsDouble) {
@@ -91,6 +124,7 @@ fun getChoice(): String {
     println("1. Add matrices")
     println("2. Multiply matrix by a constant")
     println("3. Multiply matrices")
+    println("4. Transpose matrix")
     println("0. Exit")
     print("Your choice: ")
     return readLine()!!
@@ -120,6 +154,24 @@ fun handleMultiplyMatrices(): Matrix {
     return a * b
 }
 
+fun handleTransposeMatrix(): Matrix {
+    println("1. Main diagonal")
+    println("2. Side diagonal")
+    println("3. Vertical line")
+    println("4. Horizontal line")
+    print("Your choice: ")
+    val choice = readLine()!!.toInt()
+    val matrix = Matrix.prompt("Enter matrix size: ","Enter matrix:")
+    val result = when (choice) {
+        1 -> matrix.transposeMainDiagonal()
+        2 -> matrix.transposeSideDiagonal()
+        3 -> matrix.transposeVertical()
+        4 -> matrix.transposeHorizontal()
+        else -> throw Exception("Unknown Option")
+    }
+    return result
+}
+
 fun main() {
     while (true) {
         try {
@@ -128,9 +180,11 @@ fun main() {
                 "1" -> printResult(handleAddMatrices())
                 "2" -> printResult(handleMultiplyMatrixByConstant())
                 "3" -> printResult(handleMultiplyMatrices())
+                "4" -> printResult(handleTransposeMatrix())
                 "0" -> break
             }
         } catch (ex: Exception) {
+            println(ex)
             println("The operation cannot be performed")
         }
     }
