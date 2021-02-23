@@ -83,6 +83,22 @@ data class Matrix(val data: Array<Array<Double>>) {
         } else throw Exception("Matrix must be square")
     }
 
+    fun cofactors(): Matrix {
+        val data = Array<Array<Double>>(this.shape.first) { row ->
+            Array<Double>(this.shape.second) { col ->
+               pow(-1.0,(row + col + 2).toDouble()) * minor(row + 1,col + 1).determinant()
+            }
+        }
+        return Matrix(data)
+    }
+
+    fun inverse(): Matrix {
+        val det = this.determinant()
+        if (det != 0.0) {
+           return cofactors().transposeMainDiagonal() * (1.0 / det)
+        } else throw Exception("This matrix doesn't have an inverse")
+    }
+
     override fun toString(): String {
         val formatAsDouble = data.any { it.any { !it.toString().endsWith(".0") } }
         return if (formatAsDouble) {
@@ -150,6 +166,7 @@ fun getChoice(): String {
     println("3. Multiply matrices")
     println("4. Transpose matrix")
     println("5. Calculate a determinant")
+    println("6. Inverse matrix")
     println("0. Exit")
     print("Your choice: ")
     return readLine()!!
@@ -208,6 +225,11 @@ fun handleDeterminant(): Double {
     return a.determinant()
 }
 
+fun handleInverse(): Matrix {
+    val a = Matrix.prompt("Enter matrix size: ","Enter matrix")
+    return a.inverse()
+}
+
 fun main() {
   while (true) {
         try {
@@ -218,10 +240,11 @@ fun main() {
                 "3" -> printResult(handleMultiplyMatrices())
                 "4" -> printResult(handleTransposeMatrix())
                 "5" -> printResult(handleDeterminant())
+                "6" -> printResult(handleInverse())
                 "0" -> break
             }
         } catch (ex: Exception) {
-            println("The operation cannot be performed")
+            println(ex.message)
         }
     }
 }
