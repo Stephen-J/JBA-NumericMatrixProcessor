@@ -221,7 +221,6 @@ fun main() {
                 "0" -> break
             }
         } catch (ex: Exception) {
-            println(ex)
             println("The operation cannot be performed")
         }
     }
