@@ -1,5 +1,6 @@
 package processor
 
+import java.lang.Math.pow
 import java.util.Scanner
 
 data class Matrix(val data: Array<Array<Double>>) {
@@ -57,6 +58,29 @@ data class Matrix(val data: Array<Array<Double>>) {
                 _data[shape.first - row - 1][col]
             }}
         return Matrix(transposedData)
+    }
+
+    fun minor(row: Int,col: Int): Matrix {
+        val sourceRows = (0 until shape.first).filterIndexed { _, v -> v != row - 1}
+        val sourceCols = (0 until shape.second).filterIndexed { _, v -> v != col - 1}
+        val data = Array<Array<Double>>(shape.first - 1) { currRow ->
+            Array<Double>(shape.second - 1) { currCol -> _data[sourceRows[currRow]][sourceCols[currCol]]}
+        }
+        return Matrix(data)
+    }
+
+    fun determinant(): Double {
+        if (this.shape.first == this.shape.second) {
+            var sum = 0.0
+            if (this.shape.first == 1 && this.shape.second == 1) {
+                sum += this.data.first().first()
+            } else {
+                for (i in 0 until this.shape.second) {
+                    sum += _data[0][i] * (pow(-1.0,(i + 2).toDouble()) * this.minor(1,i + 1).determinant())
+                }
+            }
+            return sum
+        } else throw Exception("Matrix must be square")
     }
 
     override fun toString(): String {
@@ -125,14 +149,21 @@ fun getChoice(): String {
     println("2. Multiply matrix by a constant")
     println("3. Multiply matrices")
     println("4. Transpose matrix")
+    println("5. Calculate a determinant")
     println("0. Exit")
     print("Your choice: ")
     return readLine()!!
 }
 
-fun printResult(result: Matrix) {
+fun printResult(result: Any) {
     println("The result is:")
-    println(result)
+    when (result) {
+        is Double -> {
+            val r = result.toString()
+            if (r.endsWith(".0")) println(r.substring(0,r.length - 2)) else println(r)
+        }
+        else -> println(result)
+    }
 }
 
 fun handleAddMatrices(): Matrix {
@@ -172,8 +203,13 @@ fun handleTransposeMatrix(): Matrix {
     return result
 }
 
+fun handleDeterminant(): Double {
+    val a = Matrix.prompt("Enter matrix size: ","Enter matrix")
+    return a.determinant()
+}
+
 fun main() {
-    while (true) {
+  while (true) {
         try {
             val choice = getChoice()
             when (choice) {
@@ -181,6 +217,7 @@ fun main() {
                 "2" -> printResult(handleMultiplyMatrixByConstant())
                 "3" -> printResult(handleMultiplyMatrices())
                 "4" -> printResult(handleTransposeMatrix())
+                "5" -> printResult(handleDeterminant())
                 "0" -> break
             }
         } catch (ex: Exception) {
